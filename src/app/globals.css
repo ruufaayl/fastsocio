@@ -1,26 +1,698 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* ── Tailwind v4 Theme ─── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-background: var(--bg-base);
+  --color-foreground: var(--text-primary);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* Custom Colors */
+  --color-bg-base: #0D0D0D;
+  --color-bg-surface: #1A1A1A;
+  --color-bg-elevated: #242424;
+  --color-border-default: #2A2A2A;
+  --color-border-subtle: #1F1F1F;
+  --color-purple: #A855F7;
+  --color-purple-dim: #7C3AED;
+  --color-yellow: #FACC15;
+  --color-orange: #F97316;
+  --color-green: #22C55E;
+  --color-red: #EF4444;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #888888;
+  --color-text-dim: #555555;
+
+  /* Fonts */
+  --font-heading: 'Clash Display', 'Space Grotesk', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Animations */
+  --animate-pulse-aura: pulse-aura 2s ease-in-out infinite;
+  --animate-slide-up: slide-up 0.4s ease-out;
+  --animate-slide-right: slide-right 0.3s ease-out;
+  --animate-fade-in: fade-in 0.3s ease-out;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-spin-slow: spin 8s linear infinite;
+  --animate-confetti: confetti 0.6s ease-out forwards;
+  --animate-shimmer: shimmer 1.5s linear infinite;
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+
+  @keyframes pulse-aura {
+
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    }
+
+    50% {
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.6), 0 0 60px rgba(168, 85, 247, 0.2);
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-right {
+    from {
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes confetti {
+    0% {
+      transform: scale(0) rotate(0deg);
+      opacity: 1;
+    }
+
+    50% {
+      transform: scale(1.2) rotate(180deg);
+      opacity: 0.8;
+    }
+
+    100% {
+      transform: scale(1) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+    }
+
+    to {
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.6), 0 0 60px rgba(168, 85, 247, 0.2);
+    }
   }
 }
 
+/* ── Extended Root Variables ─── */
+:root {
+  --bg-base: #0D0D0D;
+  --bg-surface: #1A1A1A;
+  --bg-elevated: #242424;
+  --border: #2A2A2A;
+  --border-subtle: #1F1F1F;
+  --purple: #A855F7;
+  --purple-dim: #7C3AED;
+  --yellow: #FACC15;
+  --orange: #F97316;
+  --green: #22C55E;
+  --red: #EF4444;
+  --text-primary: #FFFFFF;
+  --text-secondary: #888888;
+  --text-dim: #555555;
+
+  /* Surface depth system */
+  --surface-0: #0D0D0D;
+  --surface-1: #141414;
+  --surface-2: #1A1A1A;
+  --surface-3: #222222;
+  --surface-4: #2A2A2A;
+
+  /* Semantic aura colors */
+  --aura-ghost: #444444;
+  --aura-shadow: #6B7280;
+  --aura-signal: #60A5FA;
+  --aura-static: #A78BFA;
+  --aura-flame: #F97316;
+  --aura-aura: #A855F7;
+  --aura-legend: #FACC15;
+
+  /* Gradients */
+  --gradient-aura: linear-gradient(135deg, #A855F7 0%, #F97316 50%, #FACC15 100%);
+  --gradient-secondary: linear-gradient(135deg, #EC4899 0%, #F97316 100%);
+  --gradient-surface: linear-gradient(180deg, #1A1A1A 0%, #0F0F0F 100%);
+  --gradient-card: linear-gradient(145deg, rgba(168, 85, 247, 0.06) 0%, rgba(0, 0, 0, 0) 60%);
+  --gradient-glow-purple: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
+  --gradient-glow-orange: radial-gradient(circle, rgba(249, 115, 22, 0.08) 0%, transparent 70%);
+  --gradient-glow-pink: radial-gradient(circle, rgba(236, 72, 153, 0.08) 0%, transparent 70%);
+}
+
+/* ── Global Resets ─── */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--surface-0);
+  color: var(--text-primary);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── Typography Rules ─── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading {
+  font-family: 'Clash Display', 'Space Grotesk', sans-serif;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-dim);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── Component Utility Classes ─── */
+
+/* Glassmorphism card – premium version */
+.card-glass {
+  background: linear-gradient(145deg, rgba(26, 26, 26, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Neon purple pill button — premium */
+.btn-primary {
+  background: linear-gradient(135deg, #A855F7, #7C3AED);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Ghost button — premium */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-ghost:hover {
+  border-color: var(--purple);
+  color: var(--purple);
+  background: rgba(168, 85, 247, 0.06);
+}
+
+/* Danger button */
+.btn-danger {
+  background: linear-gradient(135deg, #EF4444, #DC2626);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+}
+
+/* Aura gradient text */
+.aura-gradient {
+  background: linear-gradient(135deg, #A855F7, #F97316, #FACC15);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Secondary gradient (pink → orange) */
+.secondary-gradient {
+  background: linear-gradient(135deg, #EC4899, #F97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.secondary-gradient-bg {
+  background: linear-gradient(135deg, #EC4899, #F97316);
+}
+
+/* Secondary button — pink to orange gradient */
+.btn-secondary {
+  background: linear-gradient(135deg, #EC4899, #F97316);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.2), 0 0 20px rgba(249, 115, 22, 0.2);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 0 30px rgba(236, 72, 153, 0.3), 0 0 30px rgba(249, 115, 22, 0.3);
+}
+
+/* Surface class */
+.surface {
+  background: var(--surface-2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Aura badge */
+.badge-aura {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Dark input — premium focus */
+.input-dark {
+  background: var(--surface-1);
+  border: 1px solid var(--surface-4);
+  border-radius: 14px;
+  padding: 12px 16px;
+  color: var(--text-primary);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.input-dark:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+}
+
+.input-dark::placeholder {
+  color: var(--text-dim);
+}
+
+/* Skeleton shimmer loader */
+.skeleton {
+  background: var(--surface-3);
+  background-image: linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.04) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+  border-radius: 8px;
+}
+
+/* ── Ambient Background Orbs ─── */
+@keyframes orb-drift-1 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  33% {
+    transform: translate(30px, -20px);
+  }
+
+  66% {
+    transform: translate(-20px, 15px);
+  }
+}
+
+@keyframes orb-drift-2 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  33% {
+    transform: translate(-25px, 25px);
+  }
+
+  66% {
+    transform: translate(35px, -10px);
+  }
+}
+
+@keyframes orb-drift-3 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  33% {
+    transform: translate(15px, 30px);
+  }
+
+  66% {
+    transform: translate(-30px, -20px);
+  }
+}
+
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ambient-bg::before,
+.ambient-bg::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+}
+
+.ambient-bg::before {
+  width: 500px;
+  height: 500px;
+  top: -100px;
+  left: -80px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+  animation: orb-drift-1 25s ease-in-out infinite alternate;
+}
+
+.ambient-bg::after {
+  width: 400px;
+  height: 400px;
+  top: 30%;
+  right: -100px;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.06) 0%, transparent 70%);
+  animation: orb-drift-2 30s ease-in-out infinite alternate;
+}
+
+.ambient-orb-3 {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  bottom: -50px;
+  left: 20%;
+  background: radial-gradient(circle, rgba(250, 204, 21, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: orb-drift-3 22s ease-in-out infinite alternate;
+}
+
+/* Splash-specific animations */
+@keyframes grid-fade {
+  0% {
+    opacity: 0.02;
+  }
+
+  100% {
+    opacity: 0.04;
+  }
+}
+
+@keyframes ring-spin-1 {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ring-spin-2 {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes logo-tracking {
+  from {
+    letter-spacing: 0.3em;
+    opacity: 0;
+  }
+
+  to {
+    letter-spacing: -0.02em;
+    opacity: 1;
+  }
+}
+
+@keyframes orb-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes particle-orbit {
+  from {
+    transform: rotate(var(--orbit-start)) translateX(var(--orbit-radius)) rotate(0deg);
+  }
+
+  to {
+    transform: rotate(calc(var(--orbit-start) + 360deg)) translateX(var(--orbit-radius)) rotate(-360deg);
+  }
+}
+
+@keyframes btn-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+/* Bell ring animation */
+@keyframes bell-ring {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  15% {
+    transform: rotate(15deg);
+  }
+
+  30% {
+    transform: rotate(-15deg);
+  }
+
+  45% {
+    transform: rotate(10deg);
+  }
+
+  60% {
+    transform: rotate(-10deg);
+  }
+
+  75% {
+    transform: rotate(5deg);
+  }
+
+  90% {
+    transform: rotate(-5deg);
+  }
+}
+
+/* Story ring – animated conic gradient */
+@keyframes story-ring-spin {
+  from {
+    --ring-angle: 0deg;
+  }
+
+  to {
+    --ring-angle: 360deg;
+  }
+}
+
+/* Number roll animation */
+@keyframes number-roll-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Input shake error */
+@keyframes input-shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  50% {
+    transform: translateX(4px);
+  }
+
+  75% {
+    transform: translateX(-4px);
+  }
+}
+
+.input-shake {
+  animation: input-shake 0.3s ease-in-out;
+}
+
+/* Focus ring utility */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.3);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
