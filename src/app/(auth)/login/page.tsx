@@ -5,20 +5,18 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import { useAuthStore } from '@/store/authStore';
 import NeonButton from '@/components/shared/NeonButton';
 import { pageTransition } from '@/lib/design-system';
 
 export default function LoginPage() {
     const router = useRouter();
-    const loadSession = useAuthStore((s) => s.loadSession);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
     const validateEmail = (val: string) => {
-        if (val && !val.endsWith('@isb.nu.edu.pk')) {
+        if (val && !val.endsWith('@isb.nu.edu.pk') && !val.endsWith('@nu.edu.pk')) {
             setError('Only @isb.nu.edu.pk emails are allowed');
         } else {
             setError('');
@@ -28,7 +26,7 @@ export default function LoginPage() {
     const handleLogin = async () => {
         setError('');
 
-        if (!email.endsWith('@isb.nu.edu.pk')) {
+        if (!email.endsWith('@isb.nu.edu.pk') && !email.endsWith('@nu.edu.pk')) {
             setError('Only @isb.nu.edu.pk emails are allowed');
             return;
         }
@@ -38,23 +36,29 @@ export default function LoginPage() {
             return;
         }
 
+        setLoading(true);
         try {
-            setLoading(true);
-            const { error: authError } = await supabase.auth.signInWithPassword({
+            const { data, error: authError } = await supabase.auth.signInWithPassword({
                 email,
                 password,
             });
 
             if (authError) {
                 setError(authError.message);
+                setLoading(false);
                 return;
             }
 
-            await loadSession();
-            router.push('/feed');
-        } catch (err: any) {
-            setError(err.message || 'Something went wrong');
-        } finally {
+            if (data?.session) {
+                // Force a hard navigation so middleware picks up the new cookie
+                window.location.href = '/feed';
+            } else {
+                setError('Login failed — no session returned');
+                setLoading(false);
+            }
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : 'Something went wrong';
+            setError(message);
             setLoading(false);
         }
     };

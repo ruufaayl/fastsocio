@@ -113,7 +113,8 @@ export default function RegisterPage() {
                 return;
             }
 
-            router.push('/onboarding');
+            // Hard navigation so middleware picks up the new session cookie
+            window.location.href = '/onboarding';
         } catch (err: any) {
             setError(err.message || 'Something went wrong');
         } finally {
