@@ -98,24 +98,15 @@ export default function RegisterPage() {
                 return;
             }
 
-            // Create profile row with defaults
+            // The handle_new_user() trigger auto-creates a profile row.
+            // Update it with the user's chosen display name and handle.
             const { error: profileError } = await supabase
                 .from('profiles')
-                .insert({
-                    id: authData.user.id,
-                    email,
+                .update({
                     display_name: displayName.trim(),
                     handle: handle.toLowerCase().trim(),
-                    aura_score: 0,
-                    aura_level: 'Shadow',
-                    vibe_tags: [],
-                    bio: '',
-                    avatar_url: null,
-                    department_id: null,
-                    degree_id: null,
-                    semester: null,
-                    is_onboarded: false,
-                });
+                })
+                .eq('id', authData.user.id);
 
             if (profileError) {
                 setError(profileError.message);
