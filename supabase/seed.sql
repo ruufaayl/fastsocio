@@ -4,27 +4,39 @@
 -- ============================================
 
 -- Departments
+-- CS Department
 INSERT INTO departments (code, name, short_name, color, icon) VALUES
 ('CS', 'Computer Science', 'CS', '#A855F7', '💻'),
-('SE', 'Software Engineering', 'SE', '#3B82F6', '🔧'),
 ('AI', 'Artificial Intelligence', 'AI', '#EC4899', '🤖'),
-('CY', 'Cyber Security', 'CY', '#EF4444', '🔒'),
+('DS', 'Data Science', 'DS', '#06B6D4', '📊'),
+('CYS', 'Cyber Security', 'CYS', '#EF4444', '🔒'),
+('SE', 'Software Engineering', 'SE', '#3B82F6', '🔧'),
+-- Engineering Department
 ('EE', 'Electrical Engineering', 'EE', '#F97316', '⚡'),
-('EL', 'Electronics', 'EL', '#22C55E', '📡'),
+('CE', 'Computer Engineering', 'CE', '#22C55E', '🖥️'),
+-- Management Department
+('AF', 'Accounting & Finance', 'AF', '#10B981', '📈'),
 ('BBA', 'Business Administration', 'BBA', '#FACC15', '💼'),
-('ME', 'Mechanical Engineering', 'ME', '#6B7280', '⚙️');
+('BA', 'Business Analytics', 'BA', '#8B5CF6', '📉'),
+('FT', 'FinTech', 'FT', '#14B8A6', '💳');
 
 -- Degrees
 INSERT INTO degrees (department_id, code, name) VALUES
+-- CS Dept
 ((SELECT id FROM departments WHERE code='CS'), 'BSCS', 'BS Computer Science'),
-((SELECT id FROM departments WHERE code='SE'), 'BSSE', 'BS Software Engineering'),
 ((SELECT id FROM departments WHERE code='AI'), 'BSAI', 'BS Artificial Intelligence'),
-((SELECT id FROM departments WHERE code='CY'), 'BSCY', 'BS Cyber Security'),
+((SELECT id FROM departments WHERE code='DS'), 'BSDS', 'BS Data Science'),
+((SELECT id FROM departments WHERE code='CYS'), 'BSCY', 'BS Cyber Security'),
+((SELECT id FROM departments WHERE code='SE'), 'BSSE', 'BS Software Engineering'),
+-- Engineering Dept
 ((SELECT id FROM departments WHERE code='EE'), 'BSEE', 'BS Electrical Engineering'),
-((SELECT id FROM departments WHERE code='EL'), 'BSEL', 'BS Electronics'),
+((SELECT id FROM departments WHERE code='CE'), 'BSCE', 'BS Computer Engineering'),
+-- Management Dept
+((SELECT id FROM departments WHERE code='AF'), 'BSAF', 'BS Accounting & Finance'),
 ((SELECT id FROM departments WHERE code='BBA'), 'BBA', 'Bachelor of Business Administration'),
 ((SELECT id FROM departments WHERE code='BBA'), 'MBA', 'Master of Business Administration'),
-((SELECT id FROM departments WHERE code='ME'), 'BSME', 'BS Mechanical Engineering');
+((SELECT id FROM departments WHERE code='BA'), 'BSBA', 'BS Business Analytics'),
+((SELECT id FROM departments WHERE code='FT'), 'BSFT', 'BS FinTech');
 
 -- Icebreaker Questions
 INSERT INTO icebreaker_questions (question) VALUES
