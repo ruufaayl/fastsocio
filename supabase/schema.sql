@@ -380,8 +380,7 @@ CREATE TABLE whiteboard_hearts (
     PRIMARY KEY(user_id, post_id)
 );
 
-CREATE INDEX idx_whiteboard_active ON whiteboard_posts(expires_at DESC)
-    WHERE expires_at > now();
+CREATE INDEX idx_whiteboard_active ON whiteboard_posts(expires_at DESC);
 
 -- ============================================
 -- CONFESSIONS
